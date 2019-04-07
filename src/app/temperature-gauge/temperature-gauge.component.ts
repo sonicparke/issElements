@@ -34,7 +34,6 @@ export class TemperatureGaugeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('this.stationComponent :', this.stationComponent);
     this.view = [this.width, this.height];
     this.firestoreService.createDocument(this.stationComponent, this.unit);
     this.firestoreService.currentTemp.subscribe(
