@@ -8,7 +8,12 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:element": "ng build --prod --output-hashing=none --single-bundle true"
+    "build:element": "ng build --prod --output-hashing=none --single-bundle true --keep-polyfills",
+    "bump-version": "cd src/assets/ && npm version patch",
+    "copy-assets": "cp src/assets/package.json dist/issElements/package.json",
+    "npm-pack": "cd dist/issElements && npm pack",
+    "build:package": "npm run build:element && npm run bump-version && npm run copy-assets && npm run npm-pack",
+    "publish": "cd dist/issElements && npm publish iss-elements*.tgz"
   },
   "private": true,
   "dependencies": {
