@@ -1,16 +1,19 @@
-<ngx-charts-bar-vertical
-  [view]="view"
-  [scheme]="colorScheme"
-  [results]="currentTemp"
-  [gradient]="gradient"
-  [xAxis]="showXAxis"
-  [yAxis]="showYAxis"
-  [legend]="showLegend"
-  [animations]="true"
-  [showXAxisLabel]="showXAxisLabel"
-  [showYAxisLabel]="showYAxisLabel"
-  [xAxisLabel]="xAxisLabel"
-  [yAxisLabel]="yAxisLabel"
-  [yScaleMax]="getScaleMax()"
-  [yScaleMin]="getScaleMin()">
-</ngx-charts-bar-vertical>
+<h1 [ngClass]="{'alert': (hiTemp | async)}">Current Temp: {{ currentTempDisplay }}</h1>
+<div class="temp-gauge">
+  <ngx-charts-bar-vertical
+    [view]="view"
+    [scheme]="colorScheme"
+    [results]="currentTemp"
+    [gradient]="gradient"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [legend]="showLegend"
+    [animations]="true"
+    [showXAxisLabel]="showXAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    [yScaleMax]="getScaleMax()"
+    [yScaleMin]="getScaleMin()">
+  </ngx-charts-bar-vertical>
+</div>

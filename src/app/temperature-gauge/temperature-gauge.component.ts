@@ -4,7 +4,7 @@ import { FirestoreService } from '../firestore.service';
 @Component({
   selector: 'iss-temperature-gauge',
   templateUrl: './temperature-gauge.component.html',
-  styleUrls: ['./temperature-gauge.component.sass']
+  styleUrls: ['./temperature-gauge.component.scss']
 })
 export class TemperatureGaugeComponent implements OnInit {
 
@@ -15,14 +15,15 @@ export class TemperatureGaugeComponent implements OnInit {
   @Output() public hiTemp = new EventEmitter();
 
   public currentTemp: any[];
+  public currentTempDisplay: string;
   public view: any[];
   public showXAxis = true;
   public showYAxis = true;
   public showLegend = false;
   public gradient = false;
-  public showXAxisLabel = true;
+  public showXAxisLabel = false;
   public xAxisLabel = 'Station Component';
-  public showYAxisLabel = true;
+  public showYAxisLabel = false;
   public yAxisLabel: string;
 
   public colorScheme = {
@@ -42,6 +43,7 @@ export class TemperatureGaugeComponent implements OnInit {
           name: this.titleCase(this.stationComponent),
           value: this.getCalculatedTemp(item.value, item.name)
         }];
+        this.currentTempDisplay = this.currentTemp[0].value;
         this.yAxisLabel = `Degrees in ${this.titleCase(this.unit)}`;
       }
     );
@@ -70,7 +72,7 @@ export class TemperatureGaugeComponent implements OnInit {
         convertedTemp = this.convertToCelsuis(temp);
       }
       if (convertedTemp > 50) {
-        this.hiTemp.emit(true);
+        this.hiTemp.emit(this.currentTemp[0]);
       }
       return convertedTemp;
     } else if (this.unit === 'fahrenheit') {
@@ -78,8 +80,8 @@ export class TemperatureGaugeComponent implements OnInit {
       if (storedUnit !== 'fahrenheit') {
         convertedTemp = this.convertToFahrenheit(temp);
       }
-      if (convertedTemp > 120) {
-        this.hiTemp.emit(true);
+      if (convertedTemp > 100) {
+        this.hiTemp.emit(this.currentTemp[0]);
       }
       return convertedTemp;
     } else {

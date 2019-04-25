@@ -1,0 +1,26 @@
+h1 {
+  text-align: center;
+  color: #ffffff;
+  background-color: #3CB371;
+  margin: 0;
+  padding: 20px;
+
+  &.alert {
+    background-color: #b71c1c;
+  }
+}
+
+:host {
+  background-color: #fff;
+  border: 1px solid #999999;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  width: 342px;
+  height: 620px;
+}
+
+.temp-gauge {
+  display: flex;
+  padding: 20px;
+}
