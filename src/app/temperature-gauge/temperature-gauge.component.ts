@@ -12,8 +12,12 @@ export class TemperatureGaugeComponent implements OnInit {
   @Input() public stationComponent = 'discombubulator';
   @Output() public hiTemp = new EventEmitter();
 
-  public currentTemp: any[];
-  public currentTempDisplay: string;
+  public currentTemp = [{
+    name: '',
+    value: 0,
+    alert: false
+  }];
+  public currentTempDisplay: number;
   public unitToDisplay: string;
   public view: any[];
   public showXAxis = true;
@@ -34,13 +38,14 @@ export class TemperatureGaugeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.view = [300, 500];
+    this.view = [280, 300];
     this.firestoreService.createDocument(this.stationComponent, this.unit);
     this.firestoreService.currentTemp.subscribe(
       (item) => {
         this.currentTemp = [{
           name: this.titleCase(this.stationComponent),
-          value: this.getCalculatedTemp(item.value, item.name)
+          value: this.getCalculatedTemp(item.value, item.name),
+          alert: false
         }];
         this.currentTempDisplay = this.currentTemp[0].value;
         this.unitToDisplay = this.titleCase(this.unit);
@@ -72,9 +77,11 @@ export class TemperatureGaugeComponent implements OnInit {
         convertedTemp = this.convertToCelsuis(temp);
       }
       if (convertedTemp > 50) {
+        this.currentTemp[0].alert = true;
         this.hiTemp.emit(this.currentTemp[0]);
       } else {
-        this.hiTemp.emit(false);
+        this.currentTemp[0].alert = false;
+        this.hiTemp.emit(this.currentTemp[0]);
       }
       return convertedTemp;
     } else if (this.unit === 'fahrenheit') {
@@ -83,9 +90,11 @@ export class TemperatureGaugeComponent implements OnInit {
         convertedTemp = this.convertToFahrenheit(temp);
       }
       if (convertedTemp >= 100) {
+        this.currentTemp[0].alert = true;
         this.hiTemp.emit(this.currentTemp[0]);
       } else {
-        this.hiTemp.emit(false);
+        this.currentTemp[0].alert = false;
+        this.hiTemp.emit(this.currentTemp[0]);
       }
       return convertedTemp;
     } else {

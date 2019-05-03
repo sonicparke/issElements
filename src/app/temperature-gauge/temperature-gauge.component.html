@@ -1,4 +1,4 @@
-<div [ngClass]="{'alert': (hiTemp | async)}" class="header">
+<div [ngClass]="{'alert': (hiTemp | async)?.alert}" class="header">
     <h1>Current Temp</h1>
     <h2>{{ currentTempDisplay }} {{ unitToDisplay }}</h2>
   </div>
